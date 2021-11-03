@@ -55,4 +55,14 @@ class MovieController extends AbstractController
         return $this->json($movie, Response::HTTP_OK);
     }
 
+    /**
+     * @return JsonResponse
+     */
+    public function getAllTypes(): JsonResponse
+    {
+        $types = $this->movieService->getAllTypes();
+
+        return $this->json($types, Response::HTTP_OK);
+    }
+
 }

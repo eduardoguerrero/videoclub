@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\MovieBundle\Service;
 
 use App\MovieBundle\Entity\Movie;
+use App\MovieBundle\Entity\MovieType;
 use App\MovieBundle\Manager\MovieManager;
+use App\MovieBundle\Manager\MovieTypeManager;
 
 /**
  * Class MovieService
@@ -16,14 +18,19 @@ class MovieService
     /** @var MovieManager */
     protected $movieManager;
 
+    /** @var MovieTypeManager */
+    protected $movieTypeManager;
+
     /**
-     * ApiService constructor.
+     * MovieService constructor.
      *
      * @param MovieManager $movieManager
+     * @param MovieTypeManager $movieTypeManager
      */
-    public function __construct(MovieManager $movieManager)
+    public function __construct(MovieManager $movieManager, MovieTypeManager $movieTypeManager)
     {
-        $this->movieManager = $movieManager;
+        $this->movieManager     = $movieManager;
+        $this->movieTypeManager = $movieTypeManager;
     }
 
     /**
@@ -36,6 +43,16 @@ class MovieService
         $movies = $this->movieManager->getAll();
 
         return $this->getDetailMovies($movies);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllTypes(): array
+    {
+        $types = $this->movieTypeManager->getAll();
+
+        return $this->getDetailType($types);
     }
 
     /**
@@ -66,13 +83,34 @@ class MovieService
                 'description' => $movie->getDescription(),
                 'unit_price'  => number_format($movie->getUnitPrice(), 2),
                 'type'        => [
-                    'id' => $movie->getFkTypeId()->getMovieTypeId(),
-                    'name' => $movie->getFkTypeId()->getName(),
-                    'created_at'=> $movie->getFkTypeId()->getCreatedAt()
+                    'id'         => $movie->getFkTypeId()->getMovieTypeId(),
+                    'name'       => $movie->getFkTypeId()->getName(),
+                    'created_at' => $movie->getFkTypeId()->getCreatedAt(),
                 ],
                 'created_at'  => $movie->getCreatedAt(),
             ];
             $data[] = $movieDetail;
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param array $types
+     *
+     * @return array
+     */
+    public function getDetailType(array $types): array
+    {
+        $data = [];
+        /** @var MovieType $movie */
+        foreach ($types as $type) {
+            $typeDetail = [
+                'id'         => $type->getMovieTypeId(),
+                'name'       => $type->getName(),
+                'created_at' => $type->getCreatedAt(),
+            ];
+            $data[] = $typeDetail;
         }
 
         return $data;
