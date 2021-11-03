@@ -1,0 +1,10 @@
+
+get_all:
+  methods: GET
+  path: movies
+  controller: movies.service.list::getAll
+
+get_by_id:
+  methods: GET
+  path: movie/{id}
+  controller: movies.service.list::getById

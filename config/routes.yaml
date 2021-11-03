@@ -1,3 +1,5 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+
+
+videoclub_api:
+  resource: '@MovieBundle/Resources/config/routes_api.yaml'
+  prefix: /api/
