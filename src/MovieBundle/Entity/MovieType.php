@@ -17,6 +17,10 @@ class MovieType
 {
     use TimestampableTrait;
 
+    public const TYPE_NEW = 'new';
+    public const TYPE_OLD = 'old';
+    public const TYPE_NORMAL = 'normal';
+
     /**
      * @var int
      * @ORM\Id

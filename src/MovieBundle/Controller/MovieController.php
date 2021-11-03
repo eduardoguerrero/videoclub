@@ -9,6 +9,7 @@ use App\MovieBundle\Exceptions\MovieTypeNotFoundException;
 use App\MovieBundle\Service\MovieService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -80,6 +81,23 @@ class MovieController extends AbstractController
         }
 
         return $this->json($types, Response::HTTP_OK);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     * @throws MovieTypeNotFoundException
+     */
+    public function rentCalculate(Request $request): JsonResponse
+    {
+        $body = json_decode($request->getContent(), true);
+        if (!array_key_exists('code', $body)) {
+            throw new MovieTypeNotFoundException('Movie type not found.');
+        }
+        $calculatedValue = $this->movieService->rentCalculate($body['code']);
+
+        return $this->json($calculatedValue, Response::HTTP_OK);
     }
 
 }

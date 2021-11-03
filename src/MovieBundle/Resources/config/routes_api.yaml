@@ -17,3 +17,8 @@ get_by_type:
   methods: GET
   path: movie/type/{typeId}
   controller: service.controller.movie::getByType
+
+rent_calculate:
+  methods: POST
+  path: rent/calculate
+  controller: service.controller.movie::rentCalculate

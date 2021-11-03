@@ -21,6 +21,7 @@ services:
       - '../src/MovieBundle/Entity/'
       - '../src/MovieBundle/Kernel.php'
       - '../src/MovieBundle/Tests/'
+      - '../src/MovieBundle/Utils/'
 
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones

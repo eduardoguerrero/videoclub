@@ -8,6 +8,7 @@ use App\MovieBundle\Entity\Movie;
 use App\MovieBundle\Entity\MovieType;
 use App\MovieBundle\Manager\MovieManager;
 use App\MovieBundle\Manager\MovieTypeManager;
+use App\MovieBundle\Utils\RentCalculateContext;
 
 /**
  * Class MovieService
@@ -124,6 +125,18 @@ class MovieService
         }
 
         return $data;
+    }
+
+    /**
+     * @param string $code
+     *
+     * @return float
+     */
+    public function rentCalculate(string $code): float
+    {
+        $strategyContext = new RentCalculateContext($code);
+
+        return $strategyContext->RentCalculate($code);
     }
 
 }
