@@ -35,4 +35,14 @@ class MovieManager extends MainManager
         return $this->getRepo()->findOneBy(['movieId' => $id]);
     }
 
+    /**
+     * @param int $typeId
+     *
+     * @return array
+     */
+    public function getByType(int $typeId): array
+    {
+        return $this->getRepo()->getByType($typeId);
+    }
+
 }

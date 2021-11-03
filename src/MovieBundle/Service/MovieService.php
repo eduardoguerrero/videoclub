@@ -56,6 +56,16 @@ class MovieService
     }
 
     /**
+     * @param $typeId
+     *
+     * @return array
+     */
+    public function getByType($typeId): array
+    {
+        return $this->movieManager->getByType($typeId);
+    }
+
+    /**
      * @param int $id
      *
      * @return array

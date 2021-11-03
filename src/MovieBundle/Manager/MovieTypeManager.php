@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\MovieBundle\Manager;
 
 use App\MovieBundle\Entity\MovieType;
+use App\MovieBundle\Repository\MovieTypeRepository;
 
 /**
  *  Movie Manager

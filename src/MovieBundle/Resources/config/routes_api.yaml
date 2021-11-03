@@ -13,3 +13,7 @@ get_all_types:
   path: movies/types/
   controller: service.controller.movie::getAllTypes
 
+get_by_type:
+  methods: GET
+  path: movie/type/{typeId}
+  controller: service.controller.movie::getByType

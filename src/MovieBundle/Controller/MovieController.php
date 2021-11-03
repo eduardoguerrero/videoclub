@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\MovieBundle\Controller;
 
 use App\MovieBundle\Exceptions\MovieNotFoundException;
+use App\MovieBundle\Exceptions\MovieTypeNotFoundException;
 use App\MovieBundle\Service\MovieService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -61,6 +62,22 @@ class MovieController extends AbstractController
     public function getAllTypes(): JsonResponse
     {
         $types = $this->movieService->getAllTypes();
+
+        return $this->json($types, Response::HTTP_OK);
+    }
+
+    /**
+     * @param int $typeId
+     *
+     * @return JsonResponse
+     * @throws MovieTypeNotFoundException
+     */
+    public function getByType(int $typeId): JsonResponse
+    {
+        $types = $this->movieService->getByType($typeId);
+        if (!$types) {
+            throw new MovieTypeNotFoundException('Movie type not found.');
+        }
 
         return $this->json($types, Response::HTTP_OK);
     }
