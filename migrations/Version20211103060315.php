@@ -60,6 +60,7 @@ final class Version20211103060315 extends AbstractMigration
             
             INSERT INTO `movie_type` (`name`, `created_at`) VALUES ('Nuevos lanzamientos',now()), ('Películas normales',now()), ('Películas viejas',now());
             INSERT INTO `movie` (`name`,`description`,unit_price,created_at, fk_type_id) values ('Jason Bourne', 'The CIA s most dangerous former operative is drawn out of hiding to uncover more explosive truths about his past.', 3.00,now(),2);            
+            INSERT INTO `movie` (`name`,`description`,unit_price,created_at, fk_type_id) values ('Back to the future', 'Marty travels back in time using an eccentric scientist s time machine.', 3.00,now(),2);  
             INSERT INTO `movie` (`name`,`description`,unit_price,created_at, fk_type_id) values ('District 9', 'A few aliens are forced to live in pathetic conditions on Earth.', 3.00,now(),3);
 SQL;
     }

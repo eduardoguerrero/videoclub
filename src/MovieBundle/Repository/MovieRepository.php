@@ -54,7 +54,7 @@ final class MovieRepository extends ServiceEntityRepository implements MovieRepo
                     'm.unitPrice',
                     'm.isActive',
                     'm.createdAt',
-                    't.name',
+                    't.name as type',
                 ]
             )
             ->innerJoin(
