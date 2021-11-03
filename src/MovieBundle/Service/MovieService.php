@@ -65,6 +65,11 @@ class MovieService
                 'name'        => $movie->getName(),
                 'description' => $movie->getDescription(),
                 'unit_price'  => number_format($movie->getUnitPrice(), 2),
+                'type'        => [
+                    'id' => $movie->getFkTypeId()->getMovieTypeId(),
+                    'name' => $movie->getFkTypeId()->getName(),
+                    'created_at'=> $movie->getFkTypeId()->getCreatedAt()
+                ],
                 'created_at'  => $movie->getCreatedAt(),
             ];
             $data[] = $movieDetail;

@@ -31,7 +31,6 @@ class Movie
      */
     private $name;
 
-
     /**
      * @var string
      *
@@ -51,6 +50,16 @@ class Movie
      * @ORM\Column(name="is_active", type="boolean", nullable=false)
      */
     private $isActive;
+
+    /**
+     * @var MovieType
+     *
+     * @ORM\ManyToOne(targetEntity="MovieType", inversedBy="Movie")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="fk_type_id", referencedColumnName="movie_type_id")
+     * })
+     */
+    private $fkTypeId;
 
     /**
      * @return int
@@ -136,6 +145,26 @@ class Movie
     public function setIsActive(?bool $isActive): Movie
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * @return MovieType
+     */
+    public function getFkTypeId(): MovieType
+    {
+        return $this->fkTypeId;
+    }
+
+    /**
+     * @param MovieType $fkTypeId
+     *
+     * @return $this
+     */
+    public function setFkTypeId(MovieType $fkTypeId): Movie
+    {
+        $this->fkTypeId = $fkTypeId;
 
         return $this;
     }
