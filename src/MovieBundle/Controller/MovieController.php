@@ -104,8 +104,9 @@ class MovieController extends AbstractController
     public function pointsCalculate(Request $request): JsonResponse
     {
         $pointsCalculateList = json_decode($request->getContent(), true);
+        $response = $this->movieService->pointsCalculate($pointsCalculateList);
 
-        return $this->json($pointsCalculateList, Response::HTTP_OK);
+        return $this->json($response, Response::HTTP_OK);
     }
 
 }

@@ -7,11 +7,7 @@ namespace App\MovieBundle\Repository;
 use App\MovieBundle\Entity\Movie;
 use App\MovieBundle\Entity\MovieType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\AbstractQuery;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
-
-use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Movie|null find($id, $lockMode = null, $lockVersion = null)
@@ -104,7 +100,8 @@ final class MovieRepository extends ServiceEntityRepository implements MovieRepo
                     'm.unitPrice',
                     't.name as type',
                     't.code',
-                    't.days'
+                    't.days',
+                    't.points'
                 ]
             )
             ->innerJoin(

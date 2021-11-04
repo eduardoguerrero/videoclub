@@ -50,6 +50,13 @@ class MovieType
     private $days;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="points", type="smallint", nullable=false)
+     */
+    private $points;
+
+    /**
      * @return int
      */
     public function getMovieTypeId(): int
@@ -113,6 +120,26 @@ class MovieType
     public function setDays(int $days): MovieType
     {
         $this->days = $days;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function get_points(): int
+    {
+        return $this->points;
+    }
+
+    /**
+     * @param int $points
+     *
+     * @return MovieType
+     */
+    public function set_points(int $points): MovieType
+    {
+        $this->points = $points;
 
         return $this;
     }

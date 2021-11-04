@@ -6,7 +6,6 @@ namespace App\MovieBundle\Service;
 
 use App\MovieBundle\Entity\Movie;
 use App\MovieBundle\Entity\MovieType;
-use App\MovieBundle\Exceptions\MovieNotFoundException;
 use App\MovieBundle\Manager\MovieManager;
 use App\MovieBundle\Manager\MovieTypeManager;
 use App\MovieBundle\Utils\RentCalculateContext;
@@ -48,6 +47,8 @@ class MovieService
     }
 
     /**
+     * Get list types
+     *
      * @return array
      */
     public function getAllTypes(): array
@@ -58,6 +59,8 @@ class MovieService
     }
 
     /**
+     * Get movie by type
+     *
      * @param $typeId
      *
      * @return array
@@ -68,6 +71,8 @@ class MovieService
     }
 
     /**
+     * Get movie by id
+     *
      * @param int $id
      *
      * @return array
@@ -80,6 +85,8 @@ class MovieService
     }
 
     /**
+     * Get movie detail
+     *
      * @param array $movies List movies
      *
      * @return array
@@ -108,6 +115,8 @@ class MovieService
     }
 
     /**
+     * Get movie type detail
+     *
      * @param array $types
      *
      * @return array
@@ -129,18 +138,15 @@ class MovieService
     }
 
     /**
+     * Calculate rent movie
+     *
      * @param array $rentCalculateList
      *
      * @return array
      */
     public function rentCalculate(array $rentCalculateList): array
     {
-        // Get movie ids
-        $movieList = [];
-        foreach ($rentCalculateList as $rentCalculate) {
-            $movieList[] = $rentCalculate['movie_id'];
-        }
-        // Calculate costs
+        $movieList = $this->getMovieList($rentCalculateList);
         $response = [];
         $movies = $this->movieManager->getByIds($movieList);
         foreach ($movies as $movie) {
@@ -159,5 +165,61 @@ class MovieService
         }
 
         return $response;
+    }
+
+    /**
+     * Get movie list take into account request body
+     *
+     * @param array $rentCalculateList
+     *
+     * @return array
+     */
+    public function getMovieList(array $rentCalculateList): array
+    {
+        $movieList = [];
+        foreach ($rentCalculateList as $rentCalculate) {
+            $movieList[] = $rentCalculate['movie_id'];
+        }
+
+        return $movieList;
+    }
+
+    /**
+     * Calculate movie points
+     *
+     * @param array $rentCalculateList
+     *
+     * @return array
+     */
+    public function pointsCalculate(array $rentCalculateList): array
+    {
+        $movieList = $this->getMovieList($rentCalculateList);
+        $movies = $this->movieManager->getByIds($movieList);
+
+        return $this->getPoints($movies);
+    }
+
+    /**
+     * Calculate movie points
+     *
+     * @param array $movies
+     *
+     * @return array
+     */
+    public function getPoints(array $movies): array
+    {
+        $calculatedPoints =  [];
+        $points = 0;
+        foreach ($movies as $movie) {
+            $points += $movie['points'];
+            $item = [
+                'movie_id' =>  $movie['movieId'],
+                'points' => $movie['points'],
+            ];
+            $calculatedPoints['items'][] = $item;
+        }
+        $calculatedPoints['total_points'] = $points;
+
+        return $calculatedPoints;
     }
 }

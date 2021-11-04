@@ -274,3 +274,37 @@ Response
 ]
 
 ```
+
+
+Calculate movie points
+
+```
+curl --location --request POST 'http://172.20.0.6/api/movie/points' \
+--header 'Content-Type: application/json' \
+--data-raw '[
+    {
+      "movie_id": 1
+    },
+    {
+      "movie_id": 3
+    }
+]'
+
+
+Response
+
+{
+  "items": [
+    {
+      "movie_id": 1,
+      "points": 1
+    },
+    {
+      "movie_id": 2,
+      "points": 1
+    }
+  ],
+  "total_points": 2
+}
+
+```
