@@ -9,6 +9,9 @@ use App\MovieBundle\Entity\MovieType;
 use App\MovieBundle\Manager\MovieManager;
 use App\MovieBundle\Manager\MovieTypeManager;
 use App\MovieBundle\Utils\RentCalculateContext;
+use DateTime;
+use Doctrine\ORM\NonUniqueResultException;
+use Exception;
 
 /**
  * Class MovieService
@@ -128,15 +131,27 @@ class MovieService
     }
 
     /**
-     * @param string $code
+     * @param array $rentCalculateList
      *
-     * @return float
+     * @return array
      */
-    public function rentCalculate(string $code): float
+    public function rentCalculate(array $rentCalculateList): array
     {
-        $strategyContext = new RentCalculateContext($code);
+        $response = [];
+        foreach ($rentCalculateList as $rentCalculate) {
+            /** @var Movie $movie */
+            $movie = $this->movieManager->findOneById($rentCalculate['movie_id']);
+            $strategyContext = new RentCalculateContext($movie->getFkTypeId()->getCode());
+            $item = [
+                'name' => $movie->getName(),
+                'type' => $movie->getFkTypeId()->getName(),
+                'cost' => $strategyContext->RentCalculate($rentCalculate, $movie),
+            ];
+            $response[] = $item;
+        }
 
-        return $strategyContext->RentCalculate($code);
+        return $response;
     }
+
 
 }

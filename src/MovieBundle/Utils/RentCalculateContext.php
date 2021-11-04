@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\MovieBundle\Utils;
 
+use App\MovieBundle\Entity\Movie;
 use App\MovieBundle\Entity\MovieType;
 
 /**
@@ -37,13 +38,14 @@ class RentCalculateContext
     }
 
     /**
-     * @param string $code
+     * @param array $rentCalculate
+     * @param Movie $movie
      *
      * @return float
      */
-    public function RentCalculate(string $code): float
+    public function RentCalculate(array $rentCalculate, Movie $movie): float
     {
-        return $this->strategy->calculate($code);
+        return $this->strategy->calculate($rentCalculate, $movie);
     }
 
 }

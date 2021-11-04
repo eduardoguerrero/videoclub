@@ -6,6 +6,7 @@ namespace App\MovieBundle\Manager;
 
 use App\MovieBundle\Entity\Movie;
 use App\MovieBundle\Repository\MovieRepository;
+use Doctrine\ORM\NonUniqueResultException;
 
 /**
  *  Movie Manager
@@ -43,6 +44,16 @@ class MovieManager extends MainManager
     public function getByType(int $typeId): array
     {
         return $this->getRepo()->getByType($typeId);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Movie|null
+     */
+    public function findOneById(int $id)
+    {
+        return $this->getRepo()->findOneById($id);
     }
 
 }

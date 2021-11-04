@@ -7,6 +7,8 @@ namespace App\MovieBundle\Repository;
 use App\MovieBundle\Entity\Movie;
 use App\MovieBundle\Entity\MovieType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -29,6 +31,8 @@ final class MovieRepository extends ServiceEntityRepository implements MovieRepo
     }
 
     /**
+     * Get all movies
+     *
      * @return array
      */
     public function getAll(): array
@@ -39,6 +43,8 @@ final class MovieRepository extends ServiceEntityRepository implements MovieRepo
     }
 
     /**
+     * Get movie by type
+     *
      * @param int $typeId
      *
      * @return array
@@ -47,7 +53,8 @@ final class MovieRepository extends ServiceEntityRepository implements MovieRepo
     {
         $qb = $this->createQueryBuilder('m');
         $qb
-            ->select([
+            ->select(
+                [
                     'm.movieId',
                     'm.name',
                     'm.description',
@@ -67,6 +74,16 @@ final class MovieRepository extends ServiceEntityRepository implements MovieRepo
             ->setParameter('fkTypeId', $typeId);
 
         return $qb->getQuery()->getArrayResult();
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Movie|null
+     */
+    public function findOneById(int $id)
+    {
+        return $this->findOneBy(['movieId' => $id]);
     }
 
 }

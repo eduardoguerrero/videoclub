@@ -28,6 +28,8 @@ final class MovieTypeRepository extends ServiceEntityRepository implements Movie
     }
 
     /**
+     * Get all types
+     *
      * @return array
      */
     public function getAll(): array

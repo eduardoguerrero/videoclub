@@ -37,6 +37,20 @@ class MovieType
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=45, nullable=false)
+     */
+    private $code;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="days", type="smallint", nullable=false)
+     */
+    private $days;
+
+    /**
      * @return int
      */
     public function getMovieTypeId(): int
@@ -60,6 +74,46 @@ class MovieType
     public function setName(string $name): MovieType
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     *
+     * @return MovieType
+     */
+    public function setCode(string $code): MovieType
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDays(): int
+    {
+        return $this->days;
+    }
+
+    /**
+     * @param int $days
+     *
+     * @return MovieType
+     */
+    public function setDays(int $days): MovieType
+    {
+        $this->days = $days;
 
         return $this;
     }
