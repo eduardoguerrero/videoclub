@@ -6,7 +6,6 @@ namespace App\MovieBundle\Manager;
 
 use App\MovieBundle\Entity\Movie;
 use App\MovieBundle\Repository\MovieRepository;
-use Doctrine\ORM\NonUniqueResultException;
 
 /**
  *  Movie Manager

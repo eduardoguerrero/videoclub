@@ -2,7 +2,6 @@
 
 namespace App\MovieBundle\Entity;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\MovieBundle\Entity\Traits\TimestampableTrait;
 

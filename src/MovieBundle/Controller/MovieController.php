@@ -87,6 +87,7 @@ class MovieController extends AbstractController
      * @param Request $request
      *
      * @return JsonResponse
+     * @throws MovieNotFoundException
      */
     public function rentCalculate(Request $request): JsonResponse
     {

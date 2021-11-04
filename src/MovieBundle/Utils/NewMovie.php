@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\MovieBundle\Utils;
 
 use App\MovieBundle\Entity\Movie;
-use App\MovieBundle\Service\MovieService;
 
 /**
  * Class NewMovie
