@@ -20,5 +20,10 @@ get_by_type:
 
 rent_calculate:
   methods: POST
-  path: rent/calculate
+  path: movie/rent
   controller: service.controller.movie::rentCalculate
+
+points_calculate:
+  methods: POST
+  path: movie/points
+  controller: service.controller.movie::pointsCalculate

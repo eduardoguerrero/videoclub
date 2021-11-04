@@ -87,7 +87,6 @@ class MovieController extends AbstractController
      * @param Request $request
      *
      * @return JsonResponse
-     * @throws MovieNotFoundException
      */
     public function rentCalculate(Request $request): JsonResponse
     {
@@ -95,6 +94,18 @@ class MovieController extends AbstractController
         $calculatedValue = $this->movieService->rentCalculate($rentCalculateList);
 
         return $this->json($calculatedValue, Response::HTTP_OK);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function pointsCalculate(Request $request): JsonResponse
+    {
+        $pointsCalculateList = json_decode($request->getContent(), true);
+
+        return $this->json($pointsCalculateList, Response::HTTP_OK);
     }
 
 }

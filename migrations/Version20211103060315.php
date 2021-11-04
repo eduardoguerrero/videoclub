@@ -55,12 +55,13 @@ final class Version20211103060315 extends AbstractMigration
                   `name` varchar(45) NOT NULL,
                   `code` varchar(45) NOT NULL,
                   `days` TINYINT(1) NOT NULL,
+                  `points` TINYINT(1) NOT NULL,
                   `created_at` datetime DEFAULT NULL,
                   `updated_at` datetime DEFAULT NULL,
                   PRIMARY KEY (`movie_type_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
             
-            INSERT INTO `movie_type` (`name`, `code`,`days`,`created_at`) VALUES ('Nuevos lanzamientos','new', 0, now()), ('Películas normales','normal', 3, now()), ('Películas viejas','old', 5, now());
+            INSERT INTO `movie_type` (`name`, `code`,`days`,`points`,`created_at`) VALUES ('Nuevos lanzamientos','new', 0,2, now()), ('Películas normales','normal', 3,1, now()), ('Películas viejas','old', 5,1, now());
             INSERT INTO `movie` (`name`,`description`,unit_price,created_at, fk_type_id) values ('Jason Bourne', 'The CIA s most dangerous former operative is drawn out of hiding to uncover more explosive truths about his past.', 3.00,now(),2);            
             INSERT INTO `movie` (`name`,`description`,unit_price,created_at, fk_type_id) values ('Back to the future', 'Marty travels back in time using an eccentric scientist s time machine.', 3.00,now(),2);  
             INSERT INTO `movie` (`name`,`description`,unit_price,created_at, fk_type_id) values ('District 9', 'A few aliens are forced to live in pathetic conditions on Earth.', 3.00,now(),3);
