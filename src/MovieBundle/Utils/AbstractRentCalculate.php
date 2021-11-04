@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\MovieBundle\Utils;
 
 use App\MovieBundle\Entity\Movie;
+use App\MovieBundle\Entity\MovieType;
 use DateInterval;
 
 /**
@@ -29,20 +30,32 @@ abstract class AbstractRentCalculate implements RentCalculateInterface
     }
 
     /**
-     * @param Movie $movie
+     * @param array $movie
      * @param int $calculatedDays
      *
-     * @return float
+     * @return array
      */
-    public function getExtraCost(Movie $movie, int $calculatedDays): float
+    public function getCosts(array $movie, int $calculatedDays): array
     {
         $extraCost = 0.0;
-        if ($calculatedDays > $movie->getFkTypeId()->getDays()) {
-            $extraDays = $calculatedDays - $movie->getFkTypeId()->getDays();
-            $extraCost = $extraDays * $movie->getUnitPrice();
+        if ($movie['type'] === MovieType::TYPE_NEW) {
+            return [
+                'price'      => (float)$movie['unitPrice'] * $calculatedDays,
+                'extra_cost' => $extraCost,
+                'total'      => (float)$movie['unitPrice'] * $calculatedDays,
+            ];
         }
 
-        return $extraCost;
+        if ($calculatedDays > $movie['days']) {
+            $extraDays = $calculatedDays - $movie['days'];
+            $extraCost = $extraDays * $movie['unitPrice'];
+        }
+
+        return [
+            'price'      => (float)$movie['unitPrice'],
+            'extra_cost' => $extraCost,
+            'total'      => (float)$movie['unitPrice'] + $extraCost,
+        ];
     }
 
 }

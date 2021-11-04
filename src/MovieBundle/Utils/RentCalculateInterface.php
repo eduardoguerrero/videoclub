@@ -10,5 +10,5 @@ use App\MovieBundle\Entity\Movie;
  */
 interface RentCalculateInterface
 {
-    public function calculate(array $rentCalculate, Movie $movie): float;
+    public function calculate(array $rentCalculate, array $movie): array;
 }

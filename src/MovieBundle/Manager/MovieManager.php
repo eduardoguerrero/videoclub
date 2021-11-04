@@ -50,9 +50,19 @@ class MovieManager extends MainManager
      *
      * @return Movie|null
      */
-    public function findOneById(int $id)
+    public function findOneById(int $id): ?Movie
     {
         return $this->getRepo()->findOneById($id);
+    }
+
+    /**
+     * @param array $movieList
+     *
+     * @return array
+     */
+    public function getByIds(array $movieList): array
+    {
+        return $this->getRepo()->getByIds($movieList);
     }
 
 }

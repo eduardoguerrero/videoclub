@@ -132,27 +132,32 @@ class MovieService
      * @param array $rentCalculateList
      *
      * @return array
-     * @throws MovieNotFoundException
      */
     public function rentCalculate(array $rentCalculateList): array
     {
-        $response = [];
+        // Get movie ids
+        $movieList = [];
         foreach ($rentCalculateList as $rentCalculate) {
-            /** @var Movie $movie */
-            $movie = $this->movieManager->findOneById($rentCalculate['movie_id']);
-            if (!$movie) {
-                throw new MovieNotFoundException('Movie not found');
-            }
-            $strategyContext = new RentCalculateContext($movie->getFkTypeId()->getCode());
+            $movieList[] = $rentCalculate['movie_id'];
+        }
+        // Calculate costs
+        $response = [];
+        $movies = $this->movieManager->getByIds($movieList);
+        foreach ($movies as $movie) {
+            $strategyContext = new RentCalculateContext($movie['code']);
+
+            $currentMovie = array_filter($rentCalculateList, static function($item) use ($movie) {
+                return ($item['movie_id'] === $movie['movieId']);
+            });
+
             $item = [
-                'name' => $movie->getName(),
-                'type' => $movie->getFkTypeId()->getName(),
-                'cost' => $strategyContext->RentCalculate($rentCalculate, $movie),
+                'name' => $movie['name'],
+                'type' => $movie['type'],
+                'costs' => $strategyContext->RentCalculate(end($currentMovie), $movie),
             ];
             $response[] = $item;
         }
 
         return $response;
     }
-
 }

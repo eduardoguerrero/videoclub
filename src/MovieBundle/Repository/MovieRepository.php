@@ -11,6 +11,8 @@ use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
+use function Doctrine\ORM\QueryBuilder;
+
 /**
  * @method Movie|null find($id, $lockMode = null, $lockVersion = null)
  * @method Movie|null findOneBy(array $criteria, array $orderBy = null)
@@ -81,9 +83,40 @@ final class MovieRepository extends ServiceEntityRepository implements MovieRepo
      *
      * @return Movie|null
      */
-    public function findOneById(int $id)
+    public function findOneById(int $id): ?Movie
     {
         return $this->findOneBy(['movieId' => $id]);
+    }
+
+    /**
+     * @param array $movieList
+     *
+     * @return array
+     */
+    public function getByIds(array $movieList): array
+    {
+        $qb = $this->createQueryBuilder('m');
+        $qb
+            ->select([
+                    'm.movieId',
+                    'm.name',
+                    'm.description',
+                    'm.unitPrice',
+                    't.name as type',
+                    't.code',
+                    't.days'
+                ]
+            )
+            ->innerJoin(
+                MovieType::class,
+                't',
+                'WITH',
+                't.movieTypeId = m.fkTypeId'
+            )
+            ->where($qb->expr()->in('m.movieId', ':movieList'))
+            ->setParameter('movieList', $movieList);
+
+        return $qb->getQuery()->getArrayResult();
     }
 
 }
