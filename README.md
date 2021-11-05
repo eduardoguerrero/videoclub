@@ -38,7 +38,12 @@ mysql -uroot -proot
 And execute: create database if not exists videoclub;
 ```
 
-4 - Create tables
+4 - Composer
+```
+Change to project structure and execute: composer install
+```
+
+5 - Create tables
 
 ```
 php bin/console doctrine:migration:execute  --up 'DoctrineMigrations\Version20211103060315'
@@ -47,7 +52,7 @@ To revert the migration you can use --down 'DoctrineMigrations\Version2021110306
 
 ```
 
-5 - Execute request
+6 - Execute request
 
 Get movie by ID
 
