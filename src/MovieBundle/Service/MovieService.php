@@ -222,4 +222,34 @@ class MovieService
 
         return $calculatedPoints;
     }
+
+    /**
+     * @param array $data Array a ordenar
+     * @param array $sortCriterion Criterio de ordenacion
+     *
+     * @return array
+     */
+    public function sortByCriterion(array $data, array $sortCriterion)
+    {
+        if (empty($sortCriterion) || empty($data)) {
+            return $data;
+        }
+        $sorts = ['DESC' => SORT_DESC, 'ASC'  => SORT_ASC];
+        $columns = [];
+        foreach ($sortCriterion as $key => $value) {
+            $columns[$key]['values'] = array_column($data, $key);
+            $columns[$key]['sort'] = $value;
+        }
+
+        array_multisort(
+            $columns['age']['values'],
+            $sorts[$columns['age']['sort']],
+            $columns['scoring']['values'],
+            $sorts[$columns['scoring']['sort']],
+            $data
+        );
+
+        return $data;
+
+    }
 }

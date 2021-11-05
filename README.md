@@ -308,3 +308,11 @@ Response
 }
 
 ```
+
+## Run tests
+
+```
+
+./vendor/phpunit/phpunit/phpunit 
+
+```
